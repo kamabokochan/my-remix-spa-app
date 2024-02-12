@@ -8,5 +8,5 @@ services:
       MYSQL_PASSWORD: kamaboko
     ports:
       - "3306:3306"
-    # volumes:
-    #   - my_db_volume:/var/lib/mysql
+    volumes:
+      - ./docker/db/init:/docker-entrypoint-initdb.d
