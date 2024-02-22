@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootkamaboko
+      MYSQL_DATABASE: remix
+      MYSQL_USER: kamaboko
+      MYSQL_PASSWORD: kamaboko
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/db/init:/docker-entrypoint-initdb.d
