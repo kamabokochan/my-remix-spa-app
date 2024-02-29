@@ -1,9 +1,17 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { PrismaClient } from '@prisma/client'
 
 const app = new Hono()
 const prisma = new PrismaClient()
+
+app.use(
+  '/*',
+  cors({
+    origin: '*'
+  })
+)
 
 // TODO全データ取得
 app.get('/', async (c) => {
