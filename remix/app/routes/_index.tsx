@@ -63,11 +63,11 @@ export default function Index() {
       </Form>
       {dataList.map(data => (
         <div key={data.id}>
-          {<fetcher.Form  method="post" onChange={(event) => updateStatus(event, data.id)}>
-              <input type="checkbox" name="status" id="" checked={data.status === "completed"} />
-            </fetcher.Form>}
-            <p>title: {data.title}</p>
-            <p>status: {data.status}</p>
+          {<fetcher.Form onChange={(event) => updateStatus(event, data.id)}>
+            <input type="checkbox" name="status" id="" checked={data.status === "completed"} />
+          </fetcher.Form>}
+          <p>title: {data.title}</p>
+          <p>status: {data.status}</p>
         </div>
       ))}
     </div>
