@@ -24,22 +24,38 @@ export async function clientLoader(): Promise<Todo[]> {
 export async function clientAction({ request }: ClientActionFunctionArgs) {
   const baseUrl = 'http://localhost:3000/'
   const formData = await request.formData()
-  if (request.method === 'PUT') {
-    const id = await formData.get('id');
-    await fetch(`${baseUrl}${id}`, {
-      method: 'PUT',
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-  } else {
-    await fetch(baseUrl, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({title: formData.get('title')})
-    })
+
+  switch(request.method) {
+    case 'PUT': {
+      const id = await formData.get('id');
+      await fetch(`${baseUrl}${id}`, {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      break
+    }
+    case 'POST': {
+      await fetch(baseUrl, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({title: formData.get('title')})
+      })
+      break
+    }
+    case 'DELETE': {
+      const id = await formData.get('id');
+      await fetch(`${baseUrl}${id}`, {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      break
+    }
   }
   return redirect("/");
 }
@@ -68,6 +84,10 @@ export default function Index() {
           </fetcher.Form>}
           <p>title: {data.title}</p>
           <p>status: {data.status}</p>
+          <Form method="delete">
+            <input type="hidden" name="id" value={data.id} />
+            <button type="submit">削除</button>
+          </Form>
         </div>
       ))}
     </div>
